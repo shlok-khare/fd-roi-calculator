@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ROI Calculator · FD-Backed Corporate Card · RazorpayX</title>
+    <meta name="description" content="Park an FD, unlock a RazorpayX Corporate Card. See how your principal earns 7% interest while every business spend earns cashback." />
+    <meta property="og:title" content="ROI Calculator · FD-Backed Corporate Card · RazorpayX" />
+    <meta property="og:description" content="See what your FD and card cashback earn together. Move the sliders for your business numbers." />
+    <meta property="og:type" content="website" />
+    <!-- Superleap analytics — drop snippet here -->
+    <!-- iframe auto-resize: posts document height to parent page -->
+    <script>
+      (function () {
+        function postHeight() {
+          if (window.parent !== window) {
+            window.parent.postMessage(
+              { type: 'rzp-roi-calc-height', height: document.documentElement.scrollHeight },
+              '*'
+            );
+          }
+        }
+        // Fire on load + whenever DOM changes
+        window.addEventListener('load', postHeight);
+        const ro = new ResizeObserver(postHeight);
+        ro.observe(document.documentElement);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
