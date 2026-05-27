@@ -1,0 +1,262 @@
+/* ─── Self-hosted fonts ─────────────────────────────────────────────────── */
+
+/* Inter — body & UI */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* Size-adjusted Arial fallback — minimises layout shift while Inter loads */
+@font-face {
+  font-family: 'Inter Fallback Arial';
+  src: local('Arial');
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+/* TASA Orbiter Display — headings & large numbers */
+/* Variable font (WOFF2) for all weights in one request */
+@font-face {
+  font-family: 'TASA Orbiter';
+  src: url('/fonts/TASAOrbiterVF.woff2') format('woff2 supports variations'),
+       url('/fonts/TASAOrbiterVF.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+/* Static OTF fallbacks for browsers without variable font support */
+@font-face {
+  font-family: 'TASA Orbiter';
+  src: url('/fonts/TASAOrbiterDisplay-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TASA Orbiter';
+  src: url('/fonts/TASAOrbiterDisplay-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TASA Orbiter';
+  src: url('/fonts/TASAOrbiterDisplay-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TASA Orbiter';
+  src: url('/fonts/TASAOrbiterDisplay-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* Size-adjusted Arial fallback for TASA Orbiter */
+@font-face {
+  font-family: 'TASA Orbiter Fallback Arial';
+  src: local('Arial');
+  size-adjust: 97%;
+  ascent-override: 88%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+/* ─── Base ──────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Inter Fallback Arial', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ─── Display / heading font ────────────────────────────────────────────── */
+
+/* Hero h1 */
+h1 {
+  font-family: 'TASA Orbiter', 'TASA Orbiter Fallback Arial', Arial, sans-serif;
+}
+
+/* Large ₹ figures — applied via .display-num class on the span wrappers */
+.display-num {
+  font-family: 'TASA Orbiter', 'TASA Orbiter Fallback Arial', Arial, sans-serif;
+}
+
+/* Section headings inside the panels */
+.panel-heading {
+  font-family: 'TASA Orbiter', 'TASA Orbiter Fallback Arial', Arial, sans-serif;
+}
+
+/* ─── Calculator grid ───────────────────────────────────────────────────── */
+
+/*
+ * Two-tier layout:
+ *   < 1024px  → single-column (mobile + portrait tablet)
+ *   ≥ 1024px  → two-column   (landscape tablet + desktop)
+ *
+ * Mobile preview order: preview(1) → inputs(2) → full results(3)
+ */
+.calc-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: stretch;
+}
+.calc-mobile-preview { order: 1; display: none; } /* shown only on <1024px via media query */
+.calc-input-sticky   { order: 2; position: static; top: auto; }
+.calc-results-col    { order: 3; }
+
+/* Single-column layouts (<1024px): show mobile preview */
+@media (max-width: 1023px) {
+  .calc-mobile-preview { display: flex; }
+}
+
+/* Desktop + landscape tablet (≥1024px): two columns, sticky results, hide preview */
+@media (min-width: 1024px) {
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+  .calc-mobile-preview { display: none; }
+  .calc-input-sticky   { order: unset; position: static; top: auto; }
+  .calc-results-col    {
+    order: unset;
+    position: sticky;
+    top: 80px;
+  }
+}
+
+/* ─── Hero text: centre-align on single-column layouts ─────────────────── */
+@media (max-width: 1023px) {
+  .hero-text-col {
+    text-align: center;
+  }
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-card-col {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ─── Header: single-column overrides (<1024px) ─────────────────────────── */
+@media (max-width: 1023px) {
+  .header-inner {
+    justify-content: center !important;
+    padding: 12px 16px !important;
+  }
+  .header-nav-buttons {
+    display: none !important;
+  }
+}
+
+/* Hero CTA buttons (below hero text) — visible only on single-column layouts */
+.hero-mobile-cta {
+  display: none;
+}
+@media (max-width: 1023px) {
+  .hero-mobile-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+}
+
+/* ─── CTA panel: stack vertically on single-column layouts ──────────────── */
+@media (max-width: 1023px) {
+  .cta-section {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+  }
+  /* Reset flex-basis (becomes a min-height in column layout) */
+  .cta-section > div:first-child {
+    flex: 0 0 auto !important;
+  }
+  .cta-section-buttons {
+    width: 100%;
+  }
+  .cta-section-buttons button {
+    width: 100% !important;
+    justify-content: center;
+  }
+}
+
+/* ─── Range input reset ─────────────────────────────────────────────────── */
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #3b82f6;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  margin-top: -8px;
+}
+input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #3b82f6;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+}
+input[type='range']::-moz-range-track {
+  height: 4px;
+  border-radius: 9999px;
+}
