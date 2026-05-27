@@ -113,8 +113,9 @@ export function computeReturns(state: CalcState): DerivedResults {
 }
 
 export function buildSignupUrl(state: CalcState): string {
-  const base = 'https://razorpay.com/x/corporate-cards/signup/';
+  const base = 'https://x.razorpay.com/auth/signup/';
   const params = new URLSearchParams({
+    intent: 'corporate_cards',
     utm_source: 'roi_calculator',
     utm_medium: 'embed',
     utm_campaign: 'fd_backed_card',
